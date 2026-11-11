@@ -9,10 +9,10 @@ Boosters.jar is a Paper 1.21.11 booster engine for personal and global money, XP
 - Exact same-identity replacement: player/global + canonical reward type + ID.
 - Highest, additive, and multiplicative stacking with an effective cap.
 - BigDecimal calculations for native integrations and a bounded reflective Vault adapter.
-- Vanilla PlayerExpChangeEvent integration.
+- Vanilla `PlayerExpChangeEvent` integration.
 - SQLite WAL persistence, atomic upserts, asynchronous serialized mutations, and restart recovery.
 - Player inventory GUI and compact administrator GUI with chat-validated preset editing.
-- Bukkit service API in the separate boosters-api module.
+- Bukkit service API in the separate `boosters-api` module.
 
 ## Requirements
 
@@ -20,21 +20,21 @@ Boosters.jar is a Paper 1.21.11 booster engine for personal and global money, XP
 - Paper 1.21.11.
 - Currency.jar is optional. Vault is optional and is never globally intercepted.
 
-## Install
-
-Copy release/Boosters-0.1.0.jar into the Paper plugins directory. Start Paper once, review plugins/Boosters/config.yml, and restart or run /boost reload. Install Currency.jar before Boosters when using exact Currency.jar reward integration.
-
 ## Build
 
 ```bash
 ./gradlew clean test fatJar
 ```
 
-The deployable artifact is release/Boosters-0.1.0.jar. See docs/USAGE.md for the shortest administrator and AI-developer setup path.
+The deployable artifact in this repository is `Boosters-0.1.0.jar`; the reproducible build output is `boosters-plugin/build/libs/Boosters-0.1.0.jar`.
+
+For the shortest administrator and AI-developer setup path, see [docs/USAGE.md](docs/USAGE.md).
 
 ## Commands
 
-/boost opens the player menu. /boost list prints personal and global assignments.
+`/boost` opens the player menu. `/boost list` prints personal and global assignments.
+
+Administrators can use:
 
 ```text
 /boost admin
@@ -47,13 +47,14 @@ The deployable artifact is release/Boosters-0.1.0.jar. See docs/USAGE.md for the
 
 ## Permissions
 
-- boosters.use — player GUI and list; default true.
-- boosters.admin — administrative commands and GUI; default op.
+- `boosters.use` — player GUI and list; default true.
+- `boosters.admin` — administrative commands and GUI; default op.
 
 ## Integration boundary
 
-Currency.jar reward producers classify an eligible reward, call the Boosters API or CurrencyRewardAdapter exactly once, and commit the returned amount once through Currency.jar. Do not install a global Vault deposit interceptor. See docs/INTEGRATIONS.md.
+Currency.jar should obtain `BoostersAPI` through Bukkit services, classify an eligible reward, call `evaluate`, and commit the returned amount exactly once in Currency.jar. Do not install a global Vault deposit interceptor. See [INTEGRATIONS.md](docs/INTEGRATIONS.md).
 
-## Validation
+## Known limitations
 
-The release includes deterministic tests and recorded Paper 1.21.11 startup/integration evidence. See docs/TESTING.md for executed checks and unverified runtime boundaries.
+The concrete Currency.jar public API is compile-only and optional at runtime; Boosters discovers it only when Currency.jar is enabled and safe-loads without it. The XP event API does not carry a universal “natural-only” flag; producers that award custom XP should use the API explicitly and avoid also firing an event that Boosters will process.
+
