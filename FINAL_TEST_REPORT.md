@@ -1,6 +1,6 @@
 # Boosters 0.1.0 — Live Validation Report
 
-Validation date: 2026-11-11 UTC  
+Validation date: 2026-11-12 UTC  
 Repository: `Forge720/Boosters` (public `main`)  
 Artifact tested: `Boosters-0.1.0.jar`  
 Artifact SHA-256: `44846e6b1bfce1d97ee6240b29c161317f89d26e9502d020be6846a30dee2d5e`
@@ -42,6 +42,7 @@ Artifact SHA-256: `44846e6b1bfce1d97ee6240b29c161317f89d26e9502d020be6846a30dee2
 | Restart recovery | PASS | After restart, all three active records and balance 130 were restored. |
 | Bukkit XP event | PASS | Live Paper harness fired `PlayerExpChangeEvent(5)` and observed 10 with a 2× booster; zero remained zero. |
 | Vault precision safety | PASS | Unit test verifies exact representable deposit and rejects unsafe large double conversion. |
+| GUI activation/status | PASS | READY preset activated by inventory click; admin integration-status click reported Currency.jar available. |
 | Clean shutdown | PASS | Server was stopped after each live run; no Boosters exception was observed. |
 
 ## Defect log
